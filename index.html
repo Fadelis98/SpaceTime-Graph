@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>时空图</title>
+    <link href="styles/style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <div></div>
+    <h1><img src="images/Fudan.jpg" alt="My test image" width="100" height="100" aria-flowto="">Fudan University</h1>
+
+    <p>
+        <a href="phylab.fudan.edu.cn/doku.php?id=course:morden">复旦大学近代物理实验</a>
+    </p>
+    <p>--------------------------------------------------</p>
+    <div id="stage">
+        <canvas id="background" width="800" height="500"></canvas>
+        <canvas id="spacetime" width="800" height="500"></canvas>
+        <canvas id="ui" width="800" height="500"></canvas>
+    </div>
+        <form method="POST">
+            <div>
+                <label for="name">名称:</label>
+                <input type="text" id="name">
+                <label for="layer">类型:</label>
+                <select id="target type">
+                    <option value="worldline">世界线</option>
+                    <option value="background axis">背景坐标系</option>
+                    <option value="axis">坐标系</option>
+                    <option value="light">光线</option>
+                    <option value="hyperbola">校准曲线</option>
+                </select>
+            </div>
+            <div>
+                <label for="x">起始位置:</label>
+                <input type="number" id="x" min="-400" max="400" step="1">
+                <label for="v">速度:</label>
+                <input type="number" id="v" min="-1" max="1" step="0.01">(自然单位制)
+            </div>
+            <div>
+                <label for="color0">选择颜色:</label>
+                <input type="color" id="color0">
+                <label for="alpha0">透明度:</label>
+                <input type="range" id="alpha0" min="0" max="255" step="1">
+            </div>
+            <div>
+                <label for="color1">选择颜色:</label>
+                <input type="color" id="color1">
+                <label for="alpha1">透明度:</label>
+                <input type="range" id="alpha1" min="0" max="255" step="1">
+            </div>
+            <div>
+                <label for="action mode">模式:</label>
+                <select id="action mode">
+                    <option value="add">添加</option>
+                    <option value="remove">删除</option>
+                    <option value="centralize">居中</option>
+                    <option value="changeview">切换视角</option>
+                </select>
+                <button type="button" id="run">执行</button>
+                <button type="button" id="add to code">生成代码</button>
+                <button type="button" id="run code">执行代码</button>
+
+            </div>
+            <div>
+                <label for="code">代码:</label>
+                <textarea id="code"></textarea>
+            </div>
+        </form>
+
+
+    <script src="scripts/main.js" defer></script>
+</body>
+
+</html>

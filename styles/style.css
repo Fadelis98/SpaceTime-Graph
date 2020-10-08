@@ -1,36 +1,34 @@
 html{
     font-family: 'Noto Sans SC', sans-serif;
 }
-
 body {
     width:  auto;
     margin: 10;
     padding: 0 20px 20px 20px;
- }
-
+}
 h1 {
     margin: 0;
     padding: 20px 0;    
     color: #00539F;
     text-shadow: 3px 3px 1px black;
-    
 }
-
 img {
     display: inline;
     margin: 0 auto;
 }
 
 #stage {
-    width: 800px;
-    height: 500px;
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    border: 2px solid black
+  width: 800px;
+  height: 500px;
+  position: relative;
+  display: flex;
+  margin-right: 3px;
+  border: 2px solid black
 }
 canvas {
     position: absolute;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #ui {
@@ -45,20 +43,10 @@ canvas {
     z-index: 1
 }
 
-#controller{
-    position: relative;
-    width: 800px;
-    height: 300px;
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    border: 2px solid black
-}
-
 form {
     /* 居中表单 */
     margin: 0 auto;
-    width: 500px;
+    width: auto;
     /* 显示表单的轮廓 */
     padding: 1em;
     border: 1px solid #CCC;
@@ -67,6 +55,17 @@ form {
 form div + div {
     margin-top: 1em;
   }
+
+  .wrapper {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.wrapper > div {
+    border: 3px solid black;
+    flex: 1 1 auto;
+}
   
 label {
     /* 确保所有label大小相同并正确对齐 */
@@ -109,7 +108,11 @@ button {
     /* 这个外边距的大小与label和文本输入框之间的间距差不多 */
     margin-left: .5em;
     font: 1em sans-serif;
+
   }
+#add{
+  margin-left: 2em;
+}
 
 select{
         /* 确保所有文本输入框字体相同

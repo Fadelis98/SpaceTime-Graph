@@ -76,3 +76,50 @@ function start_animate(duration,animate,TransParameters) {
     }
     frame();
 }
+
+
+add_button.onclick = function () {
+    //响应执行按钮
+    var index = action_mode.selectedIndex
+    switch (action_mode.options[index].value) {
+        case "add":
+            var typeIndex = target_type_input.selectedIndex
+            switch (target_type_input.options[typeIndex].value) {
+                case "worldline":
+                    button_add_worldline();
+                    break
+                case "axis":
+                    button_add_axis();
+                    break
+                default:
+                    break
+            }
+            break;
+        case "remove":
+            var typeIndex = target_type_input.selectedIndex
+            switch (target_type_input.options[typeIndex].value) {
+                case "worldline":
+                    removeWorldLine(name_input.value)
+                    Draw()
+                    break
+                case "axis":
+                    removeAxis(name_input.value)
+                    Draw()
+                    break
+                default:
+                    break
+            }
+            break
+
+        case "centralize":
+            centralizeWorldline(name_input.value)
+            break
+        case "changeview":
+            ChangeViewTo(name_input.value)
+            break
+
+        default:
+            break;
+
+    }
+}

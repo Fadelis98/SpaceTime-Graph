@@ -17,60 +17,63 @@
         <a href="phylab.fudan.edu.cn/doku.php?id=course:morden">复旦大学近代物理实验</a>
     </p>
     <p>--------------------------------------------------</p>
-    <div id="stage">
-        <canvas id="background" width="800" height="500"></canvas>
-        <canvas id="spacetime" width="800" height="500"></canvas>
-        <canvas id="ui" width="800" height="500"></canvas>
-    </div>
-        <form method="POST">
-            <div>
-                <label for="name">名称:</label>
-                <input type="text" id="name">
-                <label for="layer">类型:</label>
-                <select id="target type">
-                    <option value="worldline">世界线</option>
-                    <option value="background axis">背景坐标系</option>
-                    <option value="axis">坐标系</option>
-                    <option value="light">光线</option>
-                    <option value="hyperbola">校准曲线</option>
-                </select>
-            </div>
-            <div>
-                <label for="x">起始位置:</label>
-                <input type="number" id="x" min="-400" max="400" step="1">
-                <label for="v">速度:</label>
-                <input type="number" id="v" min="-1" max="1" step="0.01">(自然单位制)
-            </div>
-            <div>
-                <label for="color0">选择颜色:</label>
-                <input type="color" id="color0">
-                <label for="alpha0">透明度:</label>
-                <input type="range" id="alpha0" min="0" max="255" step="1">
-            </div>
-            <div>
-                <label for="color1">选择颜色:</label>
-                <input type="color" id="color1">
-                <label for="alpha1">透明度:</label>
-                <input type="range" id="alpha1" min="0" max="255" step="1">
-            </div>
-            <div>
-                <label for="action mode">模式:</label>
-                <select id="action mode">
-                    <option value="add">添加</option>
-                    <option value="remove">删除</option>
-                    <option value="centralize">居中</option>
-                    <option value="changeview">切换视角</option>
-                </select>
-                <button type="button" id="run">执行</button>
-                <button type="button" id="add to code">生成代码</button>
-                <button type="button" id="run code">执行代码</button>
 
-            </div>
-            <div>
-                <label for="code">代码:</label>
-                <textarea id="code"></textarea>
-            </div>
-        </form>
+    <div class="wrapper">
+        <div id="stage">
+            <canvas id="background" width="800" height="500"></canvas>
+            <canvas id="spacetime" width="800" height="500"></canvas>
+            <canvas id="ui" width="800" height="500"></canvas>
+        </div>
+        <div>
+            <ul>
+                <li>test</li>
+                <li>test2</li>
+            </ul>
+        </div>
+    </div>
+    
+    <form method="POST">
+        <div>
+            <label for="name">名称:</label>
+            <input type="text" id="name">
+            <label for="layer">类型:</label>
+            <select id="target type">
+                <option value="worldline">世界线</option>
+                <option value="axis">坐标系</option>
+            </select>
+            <label for="x">起始位置:</label>
+            <input type="number" id="x" min="-400" max="400" step="1">
+            <label for="v">速度:</label>
+            <input type="number" id="v" min="-1" max="1" step="0.01">(自然单位制)
+        </div>
+        <div>
+            <label for="color0">选择颜色:</label>
+            <input type="color" id="color0">
+            <label for="alpha0">透明度:</label>
+            <input type="range" id="alpha0" min="0" max="255" step="1">
+            <label for="color1">选择颜色:</label>
+            <input type="color" id="color1">
+            <label for="alpha1">透明度:</label>
+            <input type="range" id="alpha1" min="0" max="255" step="1">
+        </div>
+        <div>
+            <button type="button" id="add">添加</button>
+            <button type="button" id="remove">删除</button>
+            <button type="button" id="changeview">切换视角</button>
+            <button type="button" id="centralize">居中目标</button>
+            <button type="button" id="addHyperbola">绘制校准曲线</button>
+            <button type="button" id="addLight">绘制光线</button>
+            <button type="button" id="clearSubline">清除辅助线</button>
+            <button type="button" id="clearAll">重置画布</button>
+        </div>
+        <div>
+            <label for="code">代码:</label>
+            <textarea id="code"></textarea>
+            <button type="button" id="add to code">生成代码</button>
+            <button type="button" id="run code">执行代码</button>
+        </div>
+    </form>
+    
 
 
     <script src="scripts/main.js" defer></script>

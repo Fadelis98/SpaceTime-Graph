@@ -123,3 +123,14 @@ add_button.onclick = function () {
 
     }
 }
+
+
+function DrawBackground() {
+    //绘制背景元素
+    for (let bacEle of backgroundElements.values()) {
+        bacEle.DrawAxis()
+        if (axis.showGrid) {
+            axis.DrawGrid()
+        }
+    }
+}

@@ -43,6 +43,14 @@ canvas {
     z-index: 1
 }
 
+.worldline{
+  color:blue;
+}
+
+.axis{
+  color:red;
+}
+
 form {
     /* 居中表单 */
     margin: 0 auto;

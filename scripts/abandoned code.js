@@ -134,3 +134,23 @@ function DrawBackground() {
         }
     }
 }
+function TransformAnimation(StartSpeed, TargetSpeed){
+    //不同速度的惯性系间切换动画
+    var now = StartSpeed;
+    var dv = (TargetSpeed - StartSpeed) / 60;
+    var draw = function (){
+        staticSpeed = now;
+        Draw();
+        now += dv;
+        if (Math.abs(now-TargetSpeed) >= Math.abs(dv)){
+            wl = window.requestAnimationFrame(draw);
+        }
+        else{
+            window.cancelAnimationFrame(wl);
+        }
+    }
+    draw()
+}
+
+
+li.setAttribute("color",color);

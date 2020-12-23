@@ -6,29 +6,21 @@
     <title>时空图</title>
     <link href="styles/style.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap" rel="stylesheet">
-
 </head>
 
 <body>
-    <div></div>
-    <h1><img src="images/Fudan.jpg" alt="My test image" width="100" height="100" aria-flowto="">Fudan University</h1>
-
-    <p>
-        <a href="phylab.fudan.edu.cn/doku.php?id=course:morden">复旦大学近代物理实验</a>
-    </p>
-    <p>--------------------------------------------------</p>
-
+    <h1>时空图</h1>
+    <p class="interval">----------------------------------------------------------------------------------</p>
+    <p class="interval">使用说明请查看<a href="Canvas时空图使用说明.pdf">文档</a></p>
+    <p class="interval">----------------------------------------------------------------------------------</p>
     <div class="wrapper">
         <div id="stage">
             <canvas id="background" width="800" height="500"></canvas>
             <canvas id="spacetime" width="800" height="500"></canvas>
             <canvas id="ui" width="800" height="500"></canvas>
         </div>
-        <div>
+        <div id="list">
             <ul id="element_list">
-                <li>please add new element</li>
-                <li>blue element representates worldline</li>
-                <li>red element representates axis</li>
             </ul>
         </div>
     </div>
@@ -61,7 +53,6 @@
             <button type="button" id="add">添加</button>
             <button type="button" id="remove">删除</button>
             <button type="button" id="changeview">切换视角</button>
-            <button type="button" id="centralize">居中目标</button>
             <button type="button" id="addHyperbola">绘制校准曲线</button>
             <button type="button" id="drawLight">绘制光线</button>
             <button type="button" id="clearSubline">清除辅助线</button>

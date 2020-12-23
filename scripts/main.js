@@ -23,7 +23,7 @@ var alpha1_input = document.getElementById("alpha1");
 var add_button = document.getElementById("add");
 var remove_button = document.getElementById("remove");
 var changeview_button = document.getElementById("changeview");
-var centralize_button = document.getElementById("centralize");
+//var centralize_button = document.getElementById("centralize");
 var addHyperbola_button = document.getElementById("addHyperbola");
 var drawLight_button = document.getElementById("drawLight");
 var clearSubline_button = document.getElementById("clearSubline");
@@ -45,7 +45,7 @@ var canvas_margin = 40;//边缘宽度 使用该参数调整画布大小
 var WorldLineList = new Map();//世界线map
 var AxisList = new Map();//坐标系map
 var staticSpeed = 0; //静止参考系的速度
-var mycode = [];//生成的代码
+var mycode = new Array();//生成的代码
 
 //常用图形
 var axis = new Path2D();//坐标轴
@@ -116,9 +116,9 @@ class Axis{//坐标轴
         //绘制坐标系
         canvas2d.save();
         Lorentz_transform(staticSpeed, canvas2d);
-        canvas2d.translate(this.x, 0);
+
         Lorentz_transform(-this.v, canvas2d);
-        //canvas2d.translate(this.x, 0);
+        canvas2d.translate(this.x, 0);
 
         canvas2d.strokeStyle = setaxisColor;
         canvas2d.stroke(axis);
@@ -144,13 +144,12 @@ class WorldLine{//世界线
     //静态元素绘制方法
     DrawWorldLine(canvas2d = spa2d, setlineColor = this.lineColor){
         //绘制速度v的世界线
-        canvas2d.save();
+        canvas2d.save();0
         Lorentz_transform(staticSpeed, canvas2d);
-        canvas2d.translate(this.x, 0);
         Lorentz_transform(-this.v, canvas2d);
-        //canvas2d.translate(this.x, 0);
+        canvas2d.translate(this.x, 0);
         canvas2d.beginPath();
-        canvas2d.moveTo(0, 0);
+        canvas2d.moveTo(0, -100);
         canvas2d.lineTo(0, canvas_hei);
         canvas2d.closePath();
         canvas2d.strokeStyle = setlineColor;
@@ -216,10 +215,8 @@ function TransformAnimation(StartSpeed, TargetSpeed){
         }
         else{
             window.cancelAnimationFrame(wl);
-            if (dv >0.001)
-            {
-                TransformAnimation(now,TargetSpeed);
-            }
+            staticSpeed = TargetSpeed;
+            Draw();
         }
     }
     draw()
@@ -409,8 +406,8 @@ function removeAxis(name){
         return 0
     }
 }
-
-function centralizeWorldline(name,elementClass){
+/*
+function centralizeWorldline(name,elementClass){//目前的实现有bug，暂不使用。
     //将指定名称的世界线居中绘制
     if (elementClass == "worldline")
     {
@@ -442,7 +439,7 @@ function centralizeWorldline(name,elementClass){
     }
     Draw()
 }
-
+*/
 function changeViewTo(name,elementClass){
     //切换到指定名称的惯性系的视角
     if (elementClass == "worldline")
@@ -454,6 +451,7 @@ function changeViewTo(name,elementClass){
         else
         {
             alert("不存在这条世界线");
+            return 0
         }
     }
     else if (elementClass == "axis")
@@ -465,9 +463,11 @@ function changeViewTo(name,elementClass){
         else
         {
             alert("不存在这个坐标系");
+            return 0
         }
     } 
     TransformAnimation(staticSpeed, v);
+    return 1
 }
 
 function addLi(name,elementClass,x,v)
@@ -518,72 +518,84 @@ String.prototype.format = function ()//格式化字符串的辅助函数
 //处理页面事件的函数
 function button_add_worldline(){//添加世界线
     color = color0_input.value + parseInt(alpha0_input.value).toString(16);
-    addWorldLine(name_input.value, x_input.value, v_input.value, color);
-    Draw();
-    var str = "addWorldLine(\"{0}\",{1},{2},\"{3}\")".format(name_input.value, x_input.value, v_input.value, color);
-    mycode.push(str);
+    if(addWorldLine(name_input.value, x_input.value, v_input.value, color))
+    {
+        var str = "addWorldLine(\"{0}\",{1},{2},\"{3}\")".format(name_input.value, x_input.value, v_input.value, color);
+        mycode.push(str);
+        Draw();
+    }
+
+
 }
 
 function button_remove_woldline(){//删除世界线
-    removeWorldLine(name_input.value);
-    Draw();
-    var str = "removeWorldLine(name_input.value)";
-    mycode.push(str);
+    if(removeWorldLine(name_input.value))
+    {
+        var str = "removeWorldLine(\"{0}\")".format(name_input.value);
+        mycode.push(str);
+        Draw();
+    }
+
+
 }
 
 function button_add_axis(){//添加坐标轴
     color0 = color0_input.value + parseInt(alpha0_input.value).toString(16);
     color1 = color1_input.value + parseInt(alpha1_input.value).toString(16);
-    addAxis(name_input.value, x_input.value, v_input.value, spa2d,color0, color1);
-    var str = "addAxis(\"{0}\",{1},{2},{3},\"{4}\",\"{5}\")".format(name_input.value, x_input.value, v_input.value, "spa2d",color0, color1);
-    mycode.push(str);
-    if (alpha1_input != 0)
+    if(addAxis(name_input.value, x_input.value, v_input.value, spa2d,color0, color1))
     {
-        AxisList.get(name_input.value).setshowGrid(true);
-        mycode.push("AxisList.get(name_input.value).setshowGrid(true)");
+        var str = "addAxis(\"{0}\",{1},{2},{3},\"{4}\",\"{5}\")".format(name_input.value, x_input.value, v_input.value, "spa2d",color0, color1);
+        mycode.push(str);
+        if (alpha1_input != 0)
+        {
+            AxisList.get(name_input.value).setshowGrid(true);
+            mycode.push("AxisList.get(\"{0}\").setshowGrid(true)".format(name_input.value));
+        }
+        Draw()
     }
-    Draw()
+
 }
 
 function button_remove_axis(){//删除坐标轴
-    removeAxis(name_input.value);
-    Draw();
-    var str = "removeAxis(\"name_input.value\")";
-    mycode.push(str);
+    if(removeAxis(name_input.value))
+    {
+        Draw();
+        var str = "removeAxis(\"{0}\")".format(name_input.value);
+        mycode.push(str);
+    }
 }
 
 function button_change_view(){
     var typeIndex = target_type_input.selectedIndex;
     var elementClass = target_type_input.options[typeIndex].value;
-    changeViewTo(name_input.value,elementClass);
-    var str = "changeViewTo(\"name_input.value\")";
-    mycode.push(str);
-}
+    if(changeViewTo(name_input.value,elementClass))
+    {
+        var str = "changeViewTo(\"{0}\",\"{1}\")".format(name_input.value,elementClass);
+        mycode.push(str);
+    }
 
+}
+/*
 function button_centralize(){
     var typeIndex = target_type_input.selectedIndex;
     var elementClass = target_type_input.options[typeIndex].value;
     centralizeWorldline(name_input.value,elementClass);
-    var str = "centralizeWorldline(\"name_input.value\")"
+    var str = "centralizeWorldline(\"{0}\",\"{1}\")".format(name_input.value,elementClass);
     mycode.push(str);
 }
-
+*/
 function button_add_light(){//交互式添加光线
     uiPointer("light");
-    var str = "uiPointer(\"light\")";
-    mycode.push(str);
 }
 
 function button_add_hyperbola(){//交互式添加校准曲线
     uiPointer("hyperbola");
-    var str = "uiPointer(\"hyperbola\")";
-    mycode.push(str);
 }
 
 function button_clear_subline(){//清空辅助线
     clearCanvas(bac2d);
-    var str = "clearCanvas(bac2d)";
-    mycode.push(str);
+    //var str = "clearCanvas(bac2d)";
+    //mycode.push(str);
 }
 
 function button_clear_all(){//重置画布
@@ -596,12 +608,24 @@ function button_clear_all(){//重置画布
     })
     addAxis("basic",0,0,spa2d);
     staticSpeed = 0;
+    mycode=[];
     Draw();
 }
 
-function button_output_code()
+function button_output_code()//处理代码输出
 {
-    code_input.innerHTML=mycode.join(";\n")+";";
+    code_input.value=mycode.join(";\n")+";";
+}
+
+function button_run_code()//运行代码
+{
+    var code = new Array();
+    var codestr = code_input.value;
+    code = codestr.split("\n");
+    code.forEach(command => {
+        eval(command);
+    });
+
 }
 
 
@@ -638,11 +662,11 @@ remove_button.onclick = function(){
 changeview_button.onclick = function (){
     button_change_view();
 }
-
+/*
 centralize_button.onclick = function (){
     button_centralize();
 }
-
+*/
 addHyperbola_button.onclick = function (){
     button_add_hyperbola();
 }
@@ -661,6 +685,10 @@ clearAll_button.onclick = function (){
 
 addtocode_button.onclick = function (){
     button_output_code();
+}
+
+run_code_button.onclick = function (){
+    button_run_code();
 }
 
 //初始化
@@ -682,31 +710,14 @@ function init(){
 
 function TrainandPark(){
     //车库佯谬的时空图
-    addAxis("parkhead", 150, 0, spa2d)
-    AxisList.get("parkhead").setColor("grey", "#00000000")
-    addAxis("trainhead", 0, 0.6, spa2d)
-    AxisList.get("trainhead").setColor("grey", "green")
-    //addAxis("traintail", -100, 0.7, spa2d)
-    //AxisList.get("traintail").setColor("grey", "green")
-    AxisList.get("trainhead").setshowGrid()
-    //AxisList.get("parkhead").setshowGrid()
-    addWorldLine("trainhead", 0, 0.6)
-    addWorldLine("traintail", -100, 0.6)
-    addWorldLine("parkhead", 150, 0, "red")
-    addWorldLine("parktail", 50, 0, "red")
-    Draw()
-    //DrawLight("basic")
-    //DrawHyperbola("basic", 100, 200)
-    //changeViewTo("trainhead")
-    centralizeWorldline("trainhead")
-    //DrawHyperbola("basic",100,125)
+    addWorldLine("trainhead",0,0.5,"#0011ffff");
+    addWorldLine("traintail",-100,0.5,"#0011ffff");
+    addAxis("trainhead",0,0.5,spa2d,"#00ffdd66","#9d71d117");
+    AxisList.get("trainhead").setshowGrid(true);
+    addWorldLine("parkhead",150,0,"#ff0000ff");
+    addWorldLine("parktail",50,0,"#ff0000ff");
+    changeViewTo("trainhead","worldline");
 }
-
-function justTest() {
-    addWorldLine("test",100,0,"#FF0000FF");
-
-}
-
 init()
 //justTest()
 //TrainandPark()

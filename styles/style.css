@@ -7,23 +7,43 @@ body {
     padding: 0 20px 20px 20px;
 }
 h1 {
-    margin: 0;
-    padding: 20px 0;    
-    color: #00539F;
-    text-shadow: 3px 3px 1px black;
+  text-align: center;
+  padding: 12px 0;    
+  font-size: 4em;
 }
+.interval{
+  text-align: center;
+}
+
 img {
     display: inline;
     margin: 0 auto;
 }
+#ui {
+    z-index: 3
+}
+#spacetime {
+    z-index: 2
+}
+#background {
+    z-index: 1
+}
+
 
 #stage {
   width: 800px;
   height: 500px;
-  position: relative;
-  display: flex;
-  margin-right: 3px;
-  border: 2px solid black
+  position: absolute;
+  /*display: flex;*/
+
+}
+
+#list {
+  width: 200px;
+  height: 500px;
+  position: absolute;
+  /*display: flex;*/
+  margin-left: 800px;
 }
 canvas {
     position: absolute;
@@ -31,17 +51,18 @@ canvas {
     margin-right: auto;
 }
 
-#ui {
-    z-index: 3
+  .wrapper {
+    width : 1000px;
+    display: absolute;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin: auto;
 }
 
-#spacetime {
-    z-index: 2
+.wrapper > div {
+  border: 3px solid black;
 }
 
-#background {
-    z-index: 1
-}
 
 .worldline{
   color:blue;
@@ -51,30 +72,20 @@ canvas {
   color:red;
 }
 
+
 form {
     /* 居中表单 */
     margin: 0 auto;
-    width: auto;
+    width: 950px;
     /* 显示表单的轮廓 */
     padding: 1em;
     border: 1px solid #CCC;
     border-radius: 1em;
+    margin-top: 520px;
   }
 form div + div {
     margin-top: 1em;
   }
-
-  .wrapper {
-    display: flex;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.wrapper > div {
-    border: 3px solid black;
-    flex: 1 1 auto;
-}
-  
 label {
     /* 确保所有label大小相同并正确对齐 */
     display: inline-block;
@@ -106,8 +117,8 @@ textarea {
     vertical-align: top;
   
     /* 给文本留下足够的空间 */
-    height: 5em;
-    width: 355px;
+    height: 10em;
+    width: 400px;
   }
   
 
